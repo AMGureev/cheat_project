@@ -7,16 +7,15 @@ import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
-import javafx.scene.image.ImageView
-import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
-import kotlin.random.Random
 import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
-import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
+import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class HelloController {
     lateinit var toMenu2: Button
@@ -113,5 +112,22 @@ class HelloController {
         } catch (e: Exception) {
             println("Ошибка при создании скриншота: ${e.message}")
         }
+    }
+
+    private fun checkCode(code: String): Boolean{
+        val timeNow = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("H:m:ss"))
+        val filename = File("databaseCode.txt")
+        val bufferedReader = filename.bufferedReader()
+        val text:List<String> = bufferedReader.readLines()
+        for(line in text){
+            val keyAndTime = line.split(" ").toTypedArray()
+            if (keyAndTime.elementAt(0) == code){
+                val endTime = LocalTime.parse(keyAndTime.elementAt(1), DateTimeFormatter.ofPattern("H:m:ss"))
+                if (endTime >= timeNow){
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
