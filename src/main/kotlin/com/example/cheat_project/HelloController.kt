@@ -9,6 +9,12 @@ import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.stage.Stage
 import kotlin.random.Random
+import java.awt.Rectangle
+import java.awt.Robot
+import java.awt.Toolkit
+import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 
 class HelloController {
 
@@ -82,5 +88,18 @@ class HelloController {
     @FXML
     private fun inputCode() {
         var code = getCode.text
+    }
+    private fun screenShot() {
+        try {
+            val robot = Robot()
+            val screenSize = Toolkit.getDefaultToolkit().screenSize
+            val screenRect = Rectangle(screenSize)
+            val screenshot = robot.createScreenCapture(screenRect)
+            val outputFile = File("screenshot.png")
+            ImageIO.write(screenshot, "png", outputFile)
+            println("Скриншот сохранен в: ${outputFile.absolutePath}")
+        } catch (e: Exception) {
+            println("Ошибка при создании скриншота: ${e.message}")
+        }
     }
 }
