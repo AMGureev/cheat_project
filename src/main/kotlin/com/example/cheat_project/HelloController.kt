@@ -85,6 +85,10 @@ class HelloController {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         code = (1..10).map { allowedChars.random() }.joinToString("")
         codeGenText.text = code;
+        val timeNow = LocalTime.parse(LocalTime.now().plusHours(6).toString(), DateTimeFormatter.ofPattern("H:m:ss"))
+        val filename = File("databaseCode.txt")
+        val finalString = code + " " + timeNow.toString() + "\n"
+        filename.appendText(finalString)
     }
 
     @FXML
