@@ -14,7 +14,6 @@ import java.awt.Toolkit
 import java.io.File
 import javax.imageio.ImageIO
 import java.time.LocalTime
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class HelloController {
@@ -85,10 +84,14 @@ class HelloController {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         code = (1..10).map { allowedChars.random() }.joinToString("")
         codeGenText.text = code;
-        val timeNow = LocalTime.parse(LocalTime.now().plusHours(6).toString(), DateTimeFormatter.ofPattern("H:m:ss"))
-        val filename = File("databaseCode.txt")
-        val finalString = code + " " + timeNow.toString() + "\n"
-        filename.appendText(finalString)
+        val current = LocalTime.now().plusHours(6)
+        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val timeNow = current.format(formatted)
+        val filename = "databaseCode.txt"
+        val finalString = "$code $timeNow"
+        println(finalString)
+        println(File(filename).exists())
+        File(filename).appendText(finalString)
     }
 
     @FXML
@@ -120,7 +123,7 @@ class HelloController {
 
     private fun checkCode(code: String): Boolean{
         val timeNow = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("H:m:ss"))
-        val filename = File("databaseCode.txt")
+        val filename = File("com/example/cheat_project/databaseCode.txt")
         val bufferedReader = filename.bufferedReader()
         val text:List<String> = bufferedReader.readLines()
         for(line in text){

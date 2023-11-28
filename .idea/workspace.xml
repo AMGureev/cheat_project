@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="Add fun screenShot on HelloController.kt">
+    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="edit fun generateCode() =&gt; append code and endTime in database file.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/databaseCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/databaseCode.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +43,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/vladi/OneDrive/Рабочий стол/Utilities/SceneBuilder.exe&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="HelloApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.cheat_project.HelloApplicationKt" />
@@ -73,11 +79,40 @@
       <option name="project" value="LOCAL" />
       <updated>1701173412408</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False.">
+      <option name="closed" value="true" />
+      <created>1701204628842</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701204628842</updated>
+    </task>
+    <task id="LOCAL-00003" summary="edit fun generateCode() =&gt; append code and endTime in database file.">
+      <option name="closed" value="true" />
+      <created>1701205847940</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1701205847940</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add fun screenShot on HelloController.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add fun screenShot on HelloController.kt" />
+    <MESSAGE value="Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False." />
+    <MESSAGE value="edit fun generateCode() =&gt; append code and endTime in database file." />
+    <option name="LAST_COMMIT_MESSAGE" value="edit fun generateCode() =&gt; append code and endTime in database file." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt</url>
+          <line>93</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
