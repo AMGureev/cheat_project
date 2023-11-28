@@ -78,10 +78,8 @@ class HelloController {
     @FXML
     private fun generateCode() {
         var code = ""
-        val random = Random
-        for (i in 1..10) {
-            code += random.nextInt(10).toString()
-        }
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        code = (1..10).map { allowedChars.random() }.joinToString("")
         codeGenText.text = code;
     }
 
