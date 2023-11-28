@@ -8,9 +8,14 @@ import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.stage.Stage
+import kotlin.random.Random
 
 class HelloController {
 
+    lateinit var toMenu2: Button
+    lateinit var connectButton: Button
+    lateinit var getCode: TextField
+    lateinit var back: Button
     lateinit var codeInsertButton: Button
     lateinit var codeGenButton: Button
     @FXML
@@ -46,12 +51,36 @@ class HelloController {
 
     @FXML
     private fun goBack() {
-        nextButton.scene.window.hide()
-        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hellow-view.fxml"))
+        back.scene.window.hide()
+        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
+        val scene = Scene(fxmlLoader.load(), 800.0, 600.0)
+        val stage = Stage()
+        stage.scene = scene
+        stage.show()
+    }
+
+    @FXML
+    private fun goToMenu() {
+        toMenu2.scene.window.hide()
+        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
+        val scene = Scene(fxmlLoader.load(), 800.0, 600.0)
+        val stage = Stage()
+        stage.scene = scene
+        stage.show()
     }
 
     @FXML
     private fun generateCode() {
+        var code = ""
+        val random = Random
+        for (i in 1..10) {
+            code += random.nextInt(10).toString()
+        }
+        codeGenText.text = code;
+    }
 
+    @FXML
+    private fun inputCode() {
+        var code = getCode.text
     }
 }
