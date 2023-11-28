@@ -7,6 +7,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
+import javafx.scene.image.ImageView
+import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 import kotlin.random.Random
 import java.awt.Rectangle
@@ -17,7 +19,6 @@ import java.io.File
 import javax.imageio.ImageIO
 
 class HelloController {
-
     lateinit var toMenu2: Button
     lateinit var connectButton: Button
     lateinit var getCode: TextField
@@ -34,6 +35,8 @@ class HelloController {
     private lateinit var nextButton: Button
     @FXML
     private lateinit var choiceBox: ChoiceBox<String>
+
+    private lateinit var code: String
 
     @FXML
     private fun onHelloButtonClick() {
@@ -59,6 +62,8 @@ class HelloController {
     private fun goBack() {
         back.scene.window.hide()
         val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
+        val loader = fxmlLoader.getController<RecieverController>()
+        code = getCode.text
         val scene = Scene(fxmlLoader.load(), 800.0, 600.0)
         val stage = Stage()
         stage.scene = scene
@@ -85,7 +90,16 @@ class HelloController {
 
     @FXML
     private fun inputCode() {
-        var code = getCode.text
+        code = getCode.text
+        getCode.scene.window.hide()
+        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("getter-view.fxml"))
+        val scene = Scene(fxmlLoader.load())
+        val stage = Stage()
+        stage.scene = scene
+        stage.setOnShown {
+            fxmlLoader.getController<RecieverController>().displayCode(code)
+        }
+        stage.show()
     }
     private fun screenShot() {
         try {
