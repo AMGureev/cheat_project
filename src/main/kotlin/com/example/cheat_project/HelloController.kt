@@ -17,6 +17,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class HelloController {
+    var shooter: ScreenShoter? = null
     lateinit var toMenu2: Button
     lateinit var connectButton: Button
     lateinit var getCode: TextField
@@ -102,10 +103,17 @@ class HelloController {
         val stage = Stage()
         stage.scene = scene
         stage.setOnShown {
-            fxmlLoader.getController<RecieverController>().displayCode(code)
+            fxmlLoader.getController<RecieverController>().startController(code)
         }
         stage.show()
     }
+
+    @FXML
+    private fun connectToSession() {
+        println("Create session")
+        shooter = ScreenShoter()
+    }
+
     @FXML
     private fun screenShot() {
         try {
@@ -123,7 +131,7 @@ class HelloController {
 
     private fun checkCode(code: String): Boolean{
         val timeNow = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("H:m:ss"))
-        val filename = File("com/example/cheat_project/databaseCode.txt")
+        val filename = File("databaseCode.txt")
         val bufferedReader = filename.bufferedReader()
         val text:List<String> = bufferedReader.readLines()
         for(line in text){

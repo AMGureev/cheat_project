@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="edit fun generateCode() =&gt; append code and endTime in database file.">
+    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="уу.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/databaseCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/databaseCode.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cheat_project/generate-code.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cheat_project/generate-code.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/cheat_project/getter-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/cheat_project/getter-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,22 +98,36 @@
       <option name="project" value="LOCAL" />
       <updated>1701205847940</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="уу.">
+      <option name="closed" value="true" />
+      <created>1701244518002</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701244518002</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add fun screenShot on HelloController.kt" />
     <MESSAGE value="Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False." />
     <MESSAGE value="edit fun generateCode() =&gt; append code and endTime in database file." />
-    <option name="LAST_COMMIT_MESSAGE" value="edit fun generateCode() =&gt; append code and endTime in database file." />
+    <MESSAGE value="уу." />
+    <option name="LAST_COMMIT_MESSAGE" value="уу." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt</url>
-          <line>93</line>
+          <line>94</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt</url>
+          <line>55</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
