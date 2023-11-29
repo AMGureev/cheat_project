@@ -61,7 +61,6 @@ class HelloController {
         back.scene.window.hide()
         val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
         val loader = fxmlLoader.getController<RecieverController>()
-        code = getCode.text
         val scene = Scene(fxmlLoader.load(), 800.0, 600.0)
         val stage = Stage()
         stage.scene = scene
@@ -107,6 +106,7 @@ class HelloController {
         }
         stage.show()
     }
+    @FXML
     private fun screenShot() {
         try {
             val robot = Robot()
