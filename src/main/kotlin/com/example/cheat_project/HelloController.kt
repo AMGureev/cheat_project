@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter
 class HelloController {
     var shooter: ScreenShoter? = null
     lateinit var toMenu2: Button
+    private var firstTime: Long = 0
     lateinit var connectButton: Button
     lateinit var getCode: TextField
     lateinit var back: Button
@@ -80,18 +81,21 @@ class HelloController {
 
     @FXML
     private fun generateCode() {
-        var code = ""
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        code = (1..10).map { allowedChars.random() }.joinToString("")
-        codeGenText.text = code;
-        val current = LocalTime.now().plusHours(6)
-        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val timeNow = current.format(formatted)
-        val filename = "databaseCode.txt"
-        val finalString = "$code $timeNow"
-        println(finalString)
-        println(File(filename).exists())
-        File(filename).appendText(finalString)
+        if (waitOrWork()){
+            var code = ""
+            val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+            code = (1..10).map { allowedChars.random() }.joinToString("")
+            codeGenText.text = code;
+            val current = LocalTime.now().plusHours(6)
+            val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val timeNow = current.format(formatted)
+            val filename = "databaseCode.txt"
+            val finalString = "$code $timeNow\n"
+            File(filename).appendText(finalString)
+        }
+        else {
+            println("время не прошло")
+        }
     }
 
     @FXML
@@ -108,6 +112,16 @@ class HelloController {
         stage.show()
     }
 
+    private fun waitOrWork(): Boolean{
+        val timeNow = System.currentTimeMillis()
+        if (timeNow - 60000 >= firstTime){
+            firstTime = timeNow
+            return true
+        }
+        else{
+            return false
+        }
+    }
     @FXML
     private fun connectToSession() {
         println("Create session")
@@ -130,14 +144,16 @@ class HelloController {
     }
 
     private fun checkCode(code: String): Boolean{
-        val timeNow = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("H:m:ss"))
+        val current = LocalTime.now()
+        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val timeNow = current.format(formatted)
         val filename = File("databaseCode.txt")
         val bufferedReader = filename.bufferedReader()
         val text:List<String> = bufferedReader.readLines()
         for(line in text){
             val keyAndTime = line.split(" ").toTypedArray()
             if (keyAndTime.elementAt(0) == code){
-                val endTime = LocalTime.parse(keyAndTime.elementAt(1), DateTimeFormatter.ofPattern("H:m:ss"))
+                val endTime = keyAndTime.elementAt(1)
                 if (endTime >= timeNow){
                     return true
                 }
