@@ -19,6 +19,7 @@ import java.io.FileWriter
 
 
 class HelloController {
+    private var firstTime: Long = 0
     lateinit var toMenu2: Button
     lateinit var connectButton: Button
     lateinit var getCode: TextField
@@ -81,25 +82,20 @@ class HelloController {
 
     @FXML
     private fun generateCode() {
-        var code = ""
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        code = (1..10).map { allowedChars.random() }.joinToString("")
-        codeGenText.text = code;
-        val current = LocalTime.now().plusHours(6)
-        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val timeNow = current.format(formatted)
-        val filename = "databaseCode.txt"
-        val finalString = "$code $timeNow"
-        println(File(filename).exists())
-        addLineToFile(filename,finalString)
-    }
-
-    private fun addLineToFile(filePath: String, newLine: String) {
-        try {
-            val fileWriter = FileWriter(filePath, true)
-            fileWriter.use { it.write("$newLine\n") }
-        } catch (e: Exception) {
-            println("Error writing to the file: $e")
+        if (waitOrWork()){
+            var code = ""
+            val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+            code = (1..10).map { allowedChars.random() }.joinToString("")
+            codeGenText.text = code;
+            val current = LocalTime.now().plusHours(6)
+            val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val timeNow = current.format(formatted)
+            val filename = "databaseCode.txt"
+            val finalString = "$code $timeNow\n"
+            File(filename).appendText(finalString)
+        }
+        else{
+            println("время не прошло")
         }
     }
 
@@ -131,16 +127,27 @@ class HelloController {
             println("Ошибка при создании скриншота: ${e.message}")
         }
     }
-
+    private fun waitOrWork(): Boolean{
+        val timeNow = System.currentTimeMillis()
+        if (timeNow - 60000 >= firstTime){
+            firstTime = timeNow
+            return true
+        }
+        else{
+            return false
+        }
+    }
     private fun checkCode(code: String): Boolean{
-        val timeNow = LocalTime.parse(LocalTime.now().toString(), DateTimeFormatter.ofPattern("H:m:ss"))
-        val filename = File("com/example/cheat_project/databaseCode.txt")
+        val current = LocalTime.now()
+        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val timeNow = current.format(formatted)
+        val filename = File("databaseCode.txt")
         val bufferedReader = filename.bufferedReader()
         val text:List<String> = bufferedReader.readLines()
         for(line in text){
             val keyAndTime = line.split(" ").toTypedArray()
             if (keyAndTime.elementAt(0) == code){
-                val endTime = LocalTime.parse(keyAndTime.elementAt(1), DateTimeFormatter.ofPattern("H:m:ss"))
+                val endTime = keyAndTime.elementAt(1)
                 if (endTime >= timeNow){
                     return true
                 }
