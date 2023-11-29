@@ -1,0 +1,247 @@
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n\n  <groupId>com.example</groupId>\n  <artifactId>cheat_project</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <name>cheat_project</name>\n\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n<junit.version>5.9.2</junit.version><kotlin.version>1.8.22</kotlin.version>  </properties>\n\n  <dependencies>\n    <dependency>\n      <groupId>org.openjfx</groupId>\n      <artifactId>javafx-controls</artifactId>\n      <version>21-ea+24</version>\n    </dependency>\n    <dependency>\n      <groupId>org.openjfx</groupId>\n      <artifactId>javafx-fxml</artifactId>\n      <version>21-ea+24</version>\n    </dependency>\n<dependency>\n      <groupId>org.kordamp.bootstrapfx</groupId>\n      <artifactId>bootstrapfx-core</artifactId>\n      <version>0.4.0</version>\n    </dependency>\n<dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-api</artifactId>\n      <version>${junit.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>${junit.version}</version>\n      <scope>test</scope>\n    </dependency><dependency>\n      <groupId>org.jetbrains.kotlin</groupId>\n      <artifactId>kotlin-stdlib</artifactId>\n      <version>${kotlin.version}</version>\n    </dependency>  </dependencies>\n\n  <build>\n    <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>\n    <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.11.0</version>\n        <configuration>\n          <source>21</source>\n          <target>21</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.openjfx</groupId>\n        <artifactId>javafx-maven-plugin</artifactId>\n        <version>0.0.8</version>\n        <executions>\n          <execution>\n            <!-- Default configuration for running with: mvn clean javafx:run -->\n            <id>default-cli</id>\n            <configuration>\n              <mainClass>com.example.cheat_project/com.example.cheat_project.HelloApplication</mainClass>\n              <launcher>app</launcher>\n              <jlinkZipName>app</jlinkZipName>\n              <jlinkImageName>app</jlinkImageName>\n              <noManPages>true</noManPages>\n              <stripDebug>true</stripDebug>\n              <noHeaderFiles>true</noHeaderFiles>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n<plugin>\n        <groupId>org.jetbrains.kotlin</groupId>\n        <artifactId>kotlin-maven-plugin</artifactId>\n        <version>${kotlin.version}</version>\n        <executions>\n          <execution>\n            <id>compile</id>\n            <phase>process-sources</phase>\n            <goals>\n              <goal>compile</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>test-compile</id>\n            <phase>test-compile</phase>\n            <goals>\n              <goal>test-compile</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <jvmTarget>11</jvmTarget>\n        </configuration>\n      </plugin>    </plugins>\n  </build>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 51983f2b779abd01ab19f801ae63f9d843e98d80)
++++ b/pom.xml	(date 1701118874512)
+@@ -2,106 +2,111 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+-  <modelVersion>4.0.0</modelVersion>
++    <modelVersion>4.0.0</modelVersion>
+ 
+-  <groupId>com.example</groupId>
+-  <artifactId>cheat_project</artifactId>
+-  <version>1.0-SNAPSHOT</version>
+-  <name>cheat_project</name>
++    <groupId>com.example</groupId>
++    <artifactId>cheat_project</artifactId>
++    <version>1.0-SNAPSHOT</version>
++    <name>cheat_project</name>
+ 
+-  <properties>
+-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+-<junit.version>5.9.2</junit.version><kotlin.version>1.8.22</kotlin.version>  </properties>
++    <properties>
++        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++        <junit.version>5.9.2</junit.version>
++        <kotlin.version>1.8.22</kotlin.version>
++    </properties>
+ 
+-  <dependencies>
+-    <dependency>
+-      <groupId>org.openjfx</groupId>
+-      <artifactId>javafx-controls</artifactId>
+-      <version>21-ea+24</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.openjfx</groupId>
+-      <artifactId>javafx-fxml</artifactId>
+-      <version>21-ea+24</version>
+-    </dependency>
+-<dependency>
+-      <groupId>org.kordamp.bootstrapfx</groupId>
+-      <artifactId>bootstrapfx-core</artifactId>
+-      <version>0.4.0</version>
+-    </dependency>
+-<dependency>
+-      <groupId>org.junit.jupiter</groupId>
+-      <artifactId>junit-jupiter-api</artifactId>
+-      <version>${junit.version}</version>
+-      <scope>test</scope>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.junit.jupiter</groupId>
+-      <artifactId>junit-jupiter-engine</artifactId>
+-      <version>${junit.version}</version>
+-      <scope>test</scope>
+-    </dependency><dependency>
+-      <groupId>org.jetbrains.kotlin</groupId>
+-      <artifactId>kotlin-stdlib</artifactId>
+-      <version>${kotlin.version}</version>
+-    </dependency>  </dependencies>
++    <dependencies>
++        <dependency>
++            <groupId>org.openjfx</groupId>
++            <artifactId>javafx-controls</artifactId>
++            <version>21-ea+24</version>
++        </dependency>
++        <dependency>
++            <groupId>org.openjfx</groupId>
++            <artifactId>javafx-fxml</artifactId>
++            <version>21-ea+24</version>
++        </dependency>
++        <dependency>
++            <groupId>org.kordamp.bootstrapfx</groupId>
++            <artifactId>bootstrapfx-core</artifactId>
++            <version>0.4.0</version>
++        </dependency>
++        <dependency>
++            <groupId>org.junit.jupiter</groupId>
++            <artifactId>junit-jupiter-api</artifactId>
++            <version>${junit.version}</version>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.junit.jupiter</groupId>
++            <artifactId>junit-jupiter-engine</artifactId>
++            <version>${junit.version}</version>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.jetbrains.kotlin</groupId>
++            <artifactId>kotlin-stdlib</artifactId>
++            <version>${kotlin.version}</version>
++        </dependency>
++    </dependencies>
+ 
+-  <build>
+-    <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+-    <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+-    <plugins>
+-      <plugin>
+-        <groupId>org.apache.maven.plugins</groupId>
+-        <artifactId>maven-compiler-plugin</artifactId>
+-        <version>3.11.0</version>
+-        <configuration>
+-          <source>21</source>
+-          <target>21</target>
+-        </configuration>
+-      </plugin>
+-      <plugin>
+-        <groupId>org.openjfx</groupId>
+-        <artifactId>javafx-maven-plugin</artifactId>
+-        <version>0.0.8</version>
+-        <executions>
+-          <execution>
+-            <!-- Default configuration for running with: mvn clean javafx:run -->
+-            <id>default-cli</id>
+-            <configuration>
+-              <mainClass>com.example.cheat_project/com.example.cheat_project.HelloApplication</mainClass>
+-              <launcher>app</launcher>
+-              <jlinkZipName>app</jlinkZipName>
+-              <jlinkImageName>app</jlinkImageName>
+-              <noManPages>true</noManPages>
+-              <stripDebug>true</stripDebug>
+-              <noHeaderFiles>true</noHeaderFiles>
+-            </configuration>
+-          </execution>
+-        </executions>
+-      </plugin>
+-<plugin>
+-        <groupId>org.jetbrains.kotlin</groupId>
+-        <artifactId>kotlin-maven-plugin</artifactId>
+-        <version>${kotlin.version}</version>
+-        <executions>
+-          <execution>
+-            <id>compile</id>
+-            <phase>process-sources</phase>
+-            <goals>
+-              <goal>compile</goal>
+-            </goals>
+-          </execution>
+-          <execution>
+-            <id>test-compile</id>
+-            <phase>test-compile</phase>
+-            <goals>
+-              <goal>test-compile</goal>
+-            </goals>
+-          </execution>
+-        </executions>
+-        <configuration>
+-          <jvmTarget>11</jvmTarget>
+-        </configuration>
+-      </plugin>    </plugins>
+-  </build>
++    <build>
++        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
++        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
++        <plugins>
++            <plugin>
++                <groupId>org.apache.maven.plugins</groupId>
++                <artifactId>maven-compiler-plugin</artifactId>
++                <version>3.11.0</version>
++                <configuration>
++                    <source>21</source>
++                    <target>21</target>
++                </configuration>
++            </plugin>
++            <plugin>
++                <groupId>org.openjfx</groupId>
++                <artifactId>javafx-maven-plugin</artifactId>
++                <version>0.0.8</version>
++                <executions>
++                    <execution>
++                        <!-- Default configuration for running with: mvn clean javafx:run -->
++                        <id>default-cli</id>
++                        <configuration>
++                            <mainClass>com.example.cheat_project/com.example.cheat_project.HelloApplication</mainClass>
++                            <launcher>app</launcher>
++                            <jlinkZipName>app</jlinkZipName>
++                            <jlinkImageName>app</jlinkImageName>
++                            <noManPages>true</noManPages>
++                            <stripDebug>true</stripDebug>
++                            <noHeaderFiles>true</noHeaderFiles>
++                        </configuration>
++                    </execution>
++                </executions>
++            </plugin>
++            <plugin>
++                <groupId>org.jetbrains.kotlin</groupId>
++                <artifactId>kotlin-maven-plugin</artifactId>
++                <version>${kotlin.version}</version>
++                <executions>
++                    <execution>
++                        <id>compile</id>
++                        <phase>process-sources</phase>
++                        <goals>
++                            <goal>compile</goal>
++                        </goals>
++                    </execution>
++                    <execution>
++                        <id>test-compile</id>
++                        <phase>test-compile</phase>
++                        <goals>
++                            <goal>test-compile</goal>
++                        </goals>
++                    </execution>
++                </executions>
++                <configuration>
++                    <jvmTarget>11</jvmTarget>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
+ </project>
+\ No newline at end of file
+Index: src/main/resources/com/example/cheat_project/hello-view.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<?import javafx.geometry.Insets?>\n<?import javafx.scene.control.Label?>\n<?import javafx.scene.layout.VBox?>\n\n<?import javafx.scene.control.Button?>\n<VBox alignment=\"CENTER\" spacing=\"20.0\" xmlns:fx=\"http://javafx.com/fxml\"\n      fx:controller=\"com.example.cheat_project.HelloController\">\n  <padding>\n    <Insets bottom=\"20.0\" left=\"20.0\" right=\"20.0\" top=\"20.0\"/>\n  </padding>\n\n  <Label fx:id=\"welcomeText\"/>\n  <Button text=\"Hello!\" onAction=\"#onHelloButtonClick\"/>\n</VBox>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/com/example/cheat_project/hello-view.fxml b/src/main/resources/com/example/cheat_project/hello-view.fxml
+--- a/src/main/resources/com/example/cheat_project/hello-view.fxml	(revision 51983f2b779abd01ab19f801ae63f9d843e98d80)
++++ b/src/main/resources/com/example/cheat_project/hello-view.fxml	(date 1701118874513)
+@@ -7,10 +7,10 @@
+ <?import javafx.scene.control.Button?>
+ <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+       fx:controller="com.example.cheat_project.HelloController">
+-  <padding>
+-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+-  </padding>
++    <padding>
++        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
++    </padding>
+ 
+-  <Label fx:id="welcomeText"/>
+-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
++    <Label fx:id="welcomeText"/>
++    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+ </VBox>
