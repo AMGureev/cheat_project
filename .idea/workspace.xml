@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="it's working!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/downloaded/image_downloaded.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/downloaded/image_downloaded.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701245582442</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="it's working!">
+      <option name="closed" value="true" />
+      <created>1701259173588</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701259173588</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -133,6 +142,7 @@
     <MESSAGE value="Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False." />
     <MESSAGE value="edit fun generateCode() =&gt; append code and endTime in database file." />
     <MESSAGE value="edit fun generateCode()" />
+    <MESSAGE value="client-server communication possible" />
     <MESSAGE value="it's working!" />
     <option name="LAST_COMMIT_MESSAGE" value="it's working!" />
   </component>

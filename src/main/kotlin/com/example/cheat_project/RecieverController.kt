@@ -15,7 +15,7 @@ import java.net.URL
 import java.security.spec.ECField
 
 class RecieverController {
-    val interval: Long = 1000
+    val interval: Long = 3000
     lateinit var labelCodeDisplay: Label
     lateinit var buttonToFolder: Button
     lateinit var imageDisplay: ImageView
