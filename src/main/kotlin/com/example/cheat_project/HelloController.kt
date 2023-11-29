@@ -15,6 +15,8 @@ import java.io.File
 import javax.imageio.ImageIO
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.io.FileWriter
+
 
 class HelloController {
     lateinit var toMenu2: Button
@@ -88,10 +90,19 @@ class HelloController {
         val timeNow = current.format(formatted)
         val filename = "databaseCode.txt"
         val finalString = "$code $timeNow"
-        println(finalString)
         println(File(filename).exists())
-        File(filename).appendText(finalString)
+        addLineToFile(filename,finalString)
     }
+
+    private fun addLineToFile(filePath: String, newLine: String) {
+        try {
+            val fileWriter = FileWriter(filePath, true)
+            fileWriter.use { it.write("$newLine\n") }
+        } catch (e: Exception) {
+            println("Error writing to the file: $e")
+        }
+    }
+
 
     @FXML
     private fun inputCode() {
