@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="it's working!">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__12_40__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__12_40__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__15_05__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__15_05__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__23_13__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_11_2023__23_13__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__10_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__10_58__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__16_06__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__16_06__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__21_54__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__21_54__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__21_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_11_2023__21_58__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databaseCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/databaseCode.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/downloaded/image_downloaded.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/downloaded/image_downloaded.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/screenshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/screenshot.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/HelloController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +33,26 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="vl_branch" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vladimirch-afk&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="3521270d-f465-4fa6-894b-48550b1589da" />
+        <option name="url" value="https://github.com/AMGureev/cheat_project.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -32,17 +63,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/vladi/OneDrive/Рабочий стол/Utilities/SceneBuilder.exe",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vladi/OneDrive/Рабочий стол/Projects/Kotlin&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project" />
@@ -58,6 +89,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.HelloApplicationKt" />
         <item itemvalue="Kotlin.HelloApplicationKt" />
       </list>
     </recent_temporary>
@@ -111,14 +143,42 @@
       <option name="project" value="LOCAL" />
       <updated>1701245582442</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="it's working!">
+      <option name="closed" value="true" />
+      <created>1701259173588</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701259173588</updated>
+    </task>
+    <task id="LOCAL-00007" summary="it's working!">
+      <option name="closed" value="true" />
+      <created>1701264632241</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701264632241</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add fun screenShot on HelloController.kt" />
     <MESSAGE value="Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False." />
     <MESSAGE value="edit fun generateCode() =&gt; append code and endTime in database file." />
     <MESSAGE value="edit fun generateCode()" />
+    <MESSAGE value="client-server communication possible" />
     <MESSAGE value="it's working!" />
     <option name="LAST_COMMIT_MESSAGE" value="it's working!" />
   </component>

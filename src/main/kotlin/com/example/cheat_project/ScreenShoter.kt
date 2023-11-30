@@ -10,7 +10,12 @@ import javax.imageio.ImageIO
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
 
-class ScreenShoter {
+class ScreenShoter (
+    clientId: String
+) {
+    val serverUrl = "http://10.193.91.153:8000"  // Replace with the actual server URL
+    //val clientId : String = "id"
+    val imageUrl = "$serverUrl/$clientId"
     var startTime : Long = System.currentTimeMillis()
 
     init {
@@ -46,7 +51,7 @@ class ScreenShoter {
                 ImageIO.write(screenshot, "png", outputFile)
                 println("Скриншот сохранен в: ${outputFile.absolutePath}")
                 sendToServer(fileName)
-                println("File was sent successfully: ${outputFile.absolutePath}")
+                //println("File was sent successfully: ${outputFile.absolutePath}")
             } catch (e: Exception) {
                 println("Ошибка при создании скриншота: ${e.message}")
             }
@@ -55,11 +60,10 @@ class ScreenShoter {
     }
 
     private fun sendToServer(name: String) {
-        val serverUrl = "http://10.193.93.137:8000"
         val filePath = name
 
         try {
-            val url = URL(serverUrl)
+            val url = URL(imageUrl)
             val connection = url.openConnection() as HttpURLConnection
 
             // Set connection properties

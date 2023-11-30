@@ -86,6 +86,7 @@ class HelloController {
             val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
             code = (1..10).map { allowedChars.random() }.joinToString("")
             codeGenText.text = code;
+            codeInsertText.text = code
             val current = LocalTime.now().plusHours(6)
             val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
             val timeNow = current.format(formatted)
@@ -124,8 +125,13 @@ class HelloController {
     }
     @FXML
     private fun connectToSession() {
-        println("Create session")
-        shooter = ScreenShoter()
+        val key = codeInsertText.text
+        println(key)
+        if (key.length == 10) {
+            println(key)
+            println(key.length)
+            shooter = ScreenShoter(key)
+        }
     }
 
     @FXML
