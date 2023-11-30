@@ -25,8 +25,8 @@ class RecieverController {
 
     lateinit var codeString: String
     val serverUrl = "http://10.193.91.153:8000"  // Replace with the actual server URL
-    var clientId : String = "id"
-    val imageUrl = "$serverUrl/$clientId"
+    var clientId : String = ""
+    var imageUrl = "$serverUrl/$clientId"
     val savePath = "src/images/downloaded/image_downloaded.png"
     var startTime: Long = 0
 
@@ -35,6 +35,7 @@ class RecieverController {
     fun startController(code: String) {
         codeString = code
         clientId = code
+        imageUrl = "$serverUrl/$clientId"
         labelCodeDisplay.text = code
         startTime = System.currentTimeMillis()
         val thread = Thread {

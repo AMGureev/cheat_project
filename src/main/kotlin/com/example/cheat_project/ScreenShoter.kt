@@ -16,7 +16,7 @@ class ScreenShoter (
     val serverUrl = "http://10.193.91.153:8000"  // Replace with the actual server URL
     //val clientId : String = "id"
     val imageUrl = "$serverUrl/$clientId"
-    var startTime : Long = System.currentTimeMillis()
+    var startTime : Long = 0
 
     init {
         initializeShooter()
