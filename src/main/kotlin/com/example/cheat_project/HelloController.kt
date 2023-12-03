@@ -25,6 +25,7 @@ class HelloController {
     lateinit var back: Button
     lateinit var codeInsertButton: Button
     lateinit var codeGenButton: Button
+    private var thread : Thread? = null
     @FXML
     private lateinit var codeInsertText: TextField
     @FXML
@@ -58,6 +59,29 @@ class HelloController {
         nextButton.isDisable = false;
     }
 
+
+    private fun timer(minute : Int){
+        if (thread == null){
+            var minute = minute - 1
+            thread = Thread{
+                while (minute >= 0){
+                    for (sec in 59 downTo 0){
+                        var Sec = ""
+                        if (sec < 10){
+                            Sec = "0" + sec.toString()
+                        }
+                        else{
+                            Sec = sec.toString()
+                        }
+                        var Time: String = "$minute:$Sec"
+                        println(Time)
+                        Thread.sleep(1000)
+                    }
+                    minute--
+                }}
+            thread!!.start()
+        }
+    }
     @FXML
     private fun goBack() {
         back.scene.window.hide()
@@ -93,24 +117,24 @@ class HelloController {
             val filename = "databaseCode.txt"
             val finalString = "$code $timeNow\n"
             File(filename).appendText(finalString)
-        }
-        else {
-            println("время не прошло")
+            timer(1)
         }
     }
 
     @FXML
     private fun inputCode() {
         code = getCode.text
-        getCode.scene.window.hide()
-        val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("getter-view.fxml"))
-        val scene = Scene(fxmlLoader.load())
-        val stage = Stage()
-        stage.scene = scene
-        stage.setOnShown {
-            fxmlLoader.getController<RecieverController>().startController(code)
+        if (checkCode(code)){
+            getCode.scene.window.hide()
+            val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("getter-view.fxml"))
+            val scene = Scene(fxmlLoader.load())
+            val stage = Stage()
+            stage.scene = scene
+            stage.setOnShown {
+                fxmlLoader.getController<RecieverController>().startController(code)
+            }
+            stage.show()
         }
-        stage.show()
     }
 
     private fun waitOrWork(): Boolean{
