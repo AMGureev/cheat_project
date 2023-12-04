@@ -13,7 +13,7 @@ import kotlin.properties.Delegates
 class ScreenShoter (
     clientId: String
 ) {
-    val serverUrl = "http://10.193.91.153:8000"  // Replace with the actual server URL
+    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
     //val clientId : String = "id"
     val imageUrl = "$serverUrl/$clientId"
     var startTime : Long = 0

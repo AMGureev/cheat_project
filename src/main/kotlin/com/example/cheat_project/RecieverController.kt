@@ -24,11 +24,12 @@ class RecieverController {
     lateinit var scrollImages: AnchorPane
 
     lateinit var codeString: String
-    val serverUrl = "http://10.193.91.153:8000"  // Replace with the actual server URL
+    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
     var clientId : String = ""
     var imageUrl = "$serverUrl/$clientId"
     val savePath = "src/images/downloaded/image_downloaded.png"
     var startTime: Long = 0
+    var thread: Thread? = null
 
 
     @FXML
@@ -38,7 +39,7 @@ class RecieverController {
         imageUrl = "$serverUrl/$clientId"
         labelCodeDisplay.text = code
         startTime = System.currentTimeMillis()
-        val thread = Thread {
+        thread = Thread {
             while (true) {
                 getImageContinuously()
                 try {
@@ -48,7 +49,13 @@ class RecieverController {
                 }
             }
         }
-        thread.start()
+        thread!!.start()
+    }
+
+    fun stopGetter() {
+        thread!!.interrupt()
+        buttonGoToMenuReciever.scene.window.hide()
+        System.exit(0)
     }
 
     fun getImageContinuously() {
