@@ -1,7 +1,9 @@
 package com.example.cheat_project
 
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.ChoiceBox
@@ -12,6 +14,7 @@ import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
 import java.io.File
+import java.time.LocalDateTime
 import javax.imageio.ImageIO
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +39,10 @@ class HelloController {
     private lateinit var nextButton: Button
     @FXML
     private lateinit var choiceBox: ChoiceBox<String>
-
+    @FXML
+    private lateinit var timerLabel: Label
+    @FXML
+    private lateinit var infoErrorLabel: Label
     private lateinit var code: String
 
     @FXML
@@ -59,29 +65,36 @@ class HelloController {
         nextButton.isDisable = false;
     }
 
-
-    private fun timer(minute : Int){
-        if (thread == null){
+    @FXML
+    private fun timer(minute: Int) {
+        if (thread == null) {
             var minute = minute - 1
-            thread = Thread{
-                while (minute >= 0){
-                    for (sec in 59 downTo 0){
-                        var Sec = ""
-                        if (sec < 10){
-                            Sec = "0" + sec.toString()
-                        }
-                        else{
-                            Sec = sec.toString()
-                        }
+            thread = Thread {
+                while (minute >= 0) {
+                    for (sec in 59 downTo 0) {
+                        var Sec = if (sec < 10) "0$sec" else sec.toString()
                         var Time: String = "$minute:$Sec"
-                        println(Time)
-                        Thread.sleep(1000)
+                        try {
+                            Platform.runLater {
+                                timerLabel.text = Time
+                                timerLabel.alignment = Pos.CENTER
+                            }
+                            Thread.sleep(1000)
+                        } catch (ex: java.lang.Exception) {
+                            // Handle the exception
+                        }
                     }
                     minute--
-                }}
+                }
+                var info: String = "Генерация доступна!"
+                Platform.runLater {
+                    timerLabel.text = info
+                }
+            }
             thread!!.start()
         }
     }
+
     @FXML
     private fun goBack() {
         back.scene.window.hide()
@@ -106,17 +119,22 @@ class HelloController {
     @FXML
     private fun generateCode() {
         if (waitOrWork()){
-            var code = ""
             val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-            code = (1..10).map { allowedChars.random() }.joinToString("")
+            val code = (1..4).map { allowedChars.random() }.joinToString("") +
+                    "-" +
+                    (1..4).map { allowedChars.random() }.joinToString("") +
+                    "-" +
+                    (1..4).map { allowedChars.random() }.joinToString("")
             codeGenText.text = code;
             codeInsertText.text = code
-            val current = LocalTime.now().plusHours(6)
-            val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val current = LocalDateTime.now().plusHours(6)
+            val formatted = DateTimeFormatter.ofPattern("dd/MM/yy:HH:mm:ss")
             val timeNow = current.format(formatted)
             val filename = "databaseCode.txt"
             val finalString = "$code $timeNow\n"
             File(filename).appendText(finalString)
+            thread?.interrupt()
+            thread = null
             timer(1)
         }
     }
@@ -150,10 +168,8 @@ class HelloController {
     @FXML
     private fun connectToSession() {
         val key = codeInsertText.text
-        println(key)
-        if (key.length == 10) {
-            println(key)
-            println(key.length)
+        println(key) // print code in console
+        if (checkCode(key)){
             shooter = ScreenShoter(key)
         }
     }
@@ -174,21 +190,38 @@ class HelloController {
     }
 
     private fun checkCode(code: String): Boolean{
-        val current = LocalTime.now()
-        val formatted = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val list = code.split("-")
+        if (list.size != 3){
+            infoErrorLabel.text = "Неправильный формат!"
+            infoErrorLabel.alignment = Pos.CENTER
+            return false
+        }
+        val current = LocalDateTime.now()
+        val formatted = DateTimeFormatter.ofPattern("dd/MM/yy:HH:mm:ss")
         val timeNow = current.format(formatted)
         val filename = File("databaseCode.txt")
         val bufferedReader = filename.bufferedReader()
         val text:List<String> = bufferedReader.readLines()
+        var codeFlag = false
         for(line in text){
             val keyAndTime = line.split(" ").toTypedArray()
             if (keyAndTime.elementAt(0) == code){
+                codeFlag = true
                 val endTime = keyAndTime.elementAt(1)
-                if (endTime >= timeNow){
+                if (LocalDateTime.parse(endTime,formatted) >= current){
                     return true
                 }
             }
         }
-        return false
+        return if (codeFlag){
+            infoErrorLabel.text = "Время работы кода истекло!"
+            infoErrorLabel.alignment = Pos.CENTER
+            false
+        }
+        else{
+            infoErrorLabel.text = "Код не найден!"
+            infoErrorLabel.alignment = Pos.CENTER
+            false
+        }
     }
 }
