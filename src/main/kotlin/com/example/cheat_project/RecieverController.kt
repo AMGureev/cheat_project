@@ -7,6 +7,9 @@ import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.GridPane
+import javafx.stage.DirectoryChooser
+import javafx.stage.Stage
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -22,6 +25,7 @@ class RecieverController {
     lateinit var imageDisplay: ImageView
     lateinit var buttonGoToMenuReciever: Button
     lateinit var scrollImages: AnchorPane
+    lateinit var gridPane: GridPane
 
     lateinit var codeString: String
     val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
@@ -32,6 +36,14 @@ class RecieverController {
     var thread: Thread? = null
 
 
+    @FXML
+    fun chooseFolderToSave() { // it's work!
+        val dirChoose = DirectoryChooser()
+        val stage : Stage = gridPane.scene.window as Stage
+        val file : File = dirChoose.showDialog(stage)
+        println("Path : " + file.absolutePath)
+        // savePath = file.absolutePath
+    }
     @FXML
     fun startController(code: String) {
         codeString = code

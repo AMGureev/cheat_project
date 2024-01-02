@@ -19,7 +19,7 @@ class HelloApplication : Application() {
     override fun start(stage: Stage) {
         var fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("hello-view.fxml"))
         var scene = Scene(fxmlLoader.load(), 800.0, 600.0)
-        stage.title = "Hello!"
+        stage.title = "Cheat-project"
         stage.scene = scene
         stage.show()
         stage.centerOnScreen()
