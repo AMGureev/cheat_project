@@ -28,10 +28,11 @@ class RecieverController {
     lateinit var gridPane: GridPane
 
     lateinit var codeString: String
-    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
+    val serverUrl = "http://172.24.32.1:8000"  // Replace with the actual server URL
     var clientId : String = ""
     var imageUrl = "$serverUrl/$clientId"
-    val savePath = "src/images/downloaded/image_downloaded.png"
+    var savePath = "src/images/downloaded/image_downloaded.png"
+    var imgName = "image_downloaded.png"
     var startTime: Long = 0
     var thread: Thread? = null
 
@@ -42,7 +43,7 @@ class RecieverController {
         val stage : Stage = gridPane.scene.window as Stage
         val file : File = dirChoose.showDialog(stage)
         println("Path : " + file.absolutePath)
-        // savePath = file.absolutePath
+        savePath = file.absolutePath + "\\" + imgName
     }
     @FXML
     fun startController(code: String) {
@@ -74,7 +75,7 @@ class RecieverController {
         val currTime = System.currentTimeMillis()
         if (currTime - startTime > interval) {
             try {
-                val file = File("src/images/downloaded/image_downloaded.png")
+                val file = File(savePath)
                 val image = Image(file.toURI().toString())
                 downloadImage(imageUrl, savePath)
                 imageDisplay.image = image
