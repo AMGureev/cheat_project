@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="*" />
+    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="Fixed input-code.fxml" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,7 +163,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701357560288</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fixed input-code.fxml">
+      <option name="closed" value="true" />
+      <created>1707592939769</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1707592939769</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fixed input-code.fxml">
+      <option name="closed" value="true" />
+      <created>1707592997234</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1707592997234</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +204,8 @@
     <MESSAGE value="client-server communication possible" />
     <MESSAGE value="it's working!" />
     <MESSAGE value="Key verification added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Key verification added" />
+    <MESSAGE value="Fixed input-code.fxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed input-code.fxml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
