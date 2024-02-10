@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
+<?import javafx.scene.control.Label?>
 <GridPane prefHeight="404.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cheat_project.HelloController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="121.0" />
@@ -25,5 +26,6 @@
       <TextField fx:id="getCode" prefHeight="62.0" prefWidth="360.0" promptText="Введите код" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="connectButton" onAction="#inputCode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Подключиться" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <Button fx:id="toMenu2" onAction="#goToMenu" mnemonicParsing="false" text="Назад" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Label fx:id="infoErrorLabel" layoutX="415.0" layoutY="222.0" prefHeight="5.0" prefWidth="150.0" text="" />
    </children>
 </GridPane>

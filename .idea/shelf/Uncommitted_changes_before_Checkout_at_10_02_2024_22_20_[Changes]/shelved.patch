@@ -1,0 +1,13 @@
+Index: databaseCode.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>hUKO-yAz9-In2F 03/01/24:07:38:44\r\nDl8g-kNYv-UzPq 03/01/24:07:43:13\r\nfwdV-dIuM-kp5R 03/01/24:08:11:56\r\nCyQm-jQzF-EDZo 03/01/24:08:13:40\r\n
+===================================================================
+diff --git a/databaseCode.txt b/databaseCode.txt
+--- a/databaseCode.txt	
++++ b/databaseCode.txt	
+@@ -1,4 +1,0 @@
+-hUKO-yAz9-In2F 03/01/24:07:38:44
+-Dl8g-kNYv-UzPq 03/01/24:07:43:13
+-fwdV-dIuM-kp5R 03/01/24:08:11:56
+-CyQm-jQzF-EDZo 03/01/24:08:13:40
