@@ -155,7 +155,7 @@ class HelloController {
     }
 
     private fun sendCodeToServer(code: String) {
-        val url = URL("http://192.168.1.79:8000/$code")
+        val url = URL("http://95.165.8.132:8000/$code")
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.doOutput = true
@@ -223,7 +223,7 @@ class HelloController {
     }
 
     private fun getImageDataFromServer(key: String): ByteArray? {
-        val url = URL("http://192.168.1.79:8000/$key")
+        val url = URL("http://95.165.8.132:8000/$key")
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
 
