@@ -1,0 +1,160 @@
+Index: src/main/kotlin/com/example/cheat_project/ScreenShoter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cheat_project\r\n\r\nimport java.awt.Rectangle\r\nimport java.awt.Robot\r\nimport java.awt.Toolkit\r\nimport java.io.*\r\nimport java.net.HttpURLConnection\r\nimport java.net.URL\r\nimport javax.imageio.ImageIO\r\nimport kotlin.concurrent.thread\r\nimport kotlin.properties.Delegates\r\n\r\nclass ScreenShoter (\r\n    clientId: String\r\n) {\r\n    val serverUrl = \"http://172.24.32.1:8000\"  // Replace with the actual server URL\r\n    //val clientId : String = \"id\"\r\n    val imageUrl = \"$serverUrl/$clientId\"\r\n    var startTime : Long = 0\r\n\r\n    init {\r\n        initializeShooter()\r\n        println(\"Shooter created\")\r\n    }\r\n    private fun initializeShooter() {\r\n        startTime = System.currentTimeMillis()\r\n        val thread = Thread{\r\n            while (true) {\r\n                startProccess()\r\n                try {\r\n                    Thread.sleep(1000)\r\n                } catch (e: Exception) {\r\n                    throw RuntimeException()\r\n                }\r\n            }\r\n        }\r\n        thread.start()\r\n    }\r\n    private fun startProccess() {\r\n        println(\"In proccess\")\r\n        val interval : Long = 10000\r\n        var endTime = System.currentTimeMillis()\r\n        if (endTime - startTime > interval) {\r\n            try {\r\n                val robot = Robot()\r\n                val screenSize = Toolkit.getDefaultToolkit().screenSize\r\n                val screenRect = Rectangle(screenSize)\r\n                val screenshot = robot.createScreenCapture(screenRect)\r\n                val fileName = \"src/images/screenshot.png\"\r\n                val outputFile = File(fileName)\r\n                ImageIO.write(screenshot, \"png\", outputFile)\r\n                println(\"Скриншот сохранен в: ${outputFile.absolutePath}\")\r\n                sendToServer(fileName)\r\n                //println(\"File was sent successfully: ${outputFile.absolutePath}\")\r\n            } catch (e: Exception) {\r\n                println(\"Ошибка при создании скриншота: ${e.message}\")\r\n            }\r\n            startTime = endTime\r\n        }\r\n    }\r\n\r\n    private fun sendToServer(name: String) {\r\n        val filePath = name\r\n\r\n        try {\r\n            val url = URL(imageUrl)\r\n            val connection = url.openConnection() as HttpURLConnection\r\n\r\n            // Set connection properties\r\n            connection.doOutput = true\r\n            connection.requestMethod = \"POST\"\r\n            connection.setRequestProperty(\"Content-Type\", \"multipart/form-data; boundary=${System.currentTimeMillis()}\")\r\n\r\n            val outputStream = DataOutputStream(connection.outputStream)\r\n\r\n            // Add file part\r\n            val fileName = File(filePath).name\r\n            val fileInputStream = FileInputStream(filePath)\r\n            val boundary = \"*****\"\r\n            val lineEnd = \"\\r\\n\"\r\n\r\n            outputStream.writeBytes(\"--$boundary$lineEnd\")\r\n            outputStream.writeBytes(\"Content-Disposition: form-data; name=\\\"file\\\"; filename=\\\"$fileName\\\"$lineEnd\")\r\n            outputStream.writeBytes(lineEnd)\r\n\r\n            val bufferSize = 4096\r\n            val buffer = ByteArray(bufferSize)\r\n            var bytesRead: Int\r\n\r\n            while (fileInputStream.read(buffer, 0, bufferSize).also { bytesRead = it } != -1) {\r\n                outputStream.write(buffer, 0, bytesRead)\r\n            }\r\n\r\n            outputStream.writeBytes(lineEnd)\r\n            outputStream.writeBytes(\"--$boundary--$lineEnd\")\r\n\r\n            // Close streams\r\n            fileInputStream.close()\r\n            outputStream.flush()\r\n            outputStream.close()\r\n\r\n            // Get the server response\r\n            val responseCode = connection.responseCode\r\n            val inputStream = if (responseCode == HttpURLConnection.HTTP_OK) {\r\n                connection.inputStream\r\n            } else {\r\n                connection.errorStream\r\n            }\r\n\r\n            val reader = BufferedReader(InputStreamReader(inputStream))\r\n            var line: String?\r\n            val response = StringBuilder()\r\n\r\n            while (reader.readLine().also { line = it } != null) {\r\n                response.append(line)\r\n            }\r\n\r\n            // Close streams\r\n            reader.close()\r\n            inputStream.close()\r\n\r\n            // Print server response\r\n            println(\"Server Response: $response\")\r\n\r\n            // Close the connection\r\n            connection.disconnect()\r\n\r\n        } catch (e: Exception) {\r\n            println(\"File $filePath$ was not sent\")\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt b/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt
+--- a/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt	(revision 9960727d499426109da7e3dcb44adc91420f6d2e)
++++ b/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt	(date 1707594882806)
+@@ -13,7 +13,7 @@
+ class ScreenShoter (
+     clientId: String
+ ) {
+-    val serverUrl = "http://172.24.32.1:8000"  // Replace with the actual server URL
++    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
+     //val clientId : String = "id"
+     val imageUrl = "$serverUrl/$clientId"
+     var startTime : Long = 0
+Index: databaseCode.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>hUKO-yAz9-In2F 03/01/24:07:38:44\r\nDl8g-kNYv-UzPq 03/01/24:07:43:13\r\nfwdV-dIuM-kp5R 03/01/24:08:11:56\r\nCyQm-jQzF-EDZo 03/01/24:08:13:40\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/databaseCode.txt b/databaseCode.txt
+--- a/databaseCode.txt	(revision 9960727d499426109da7e3dcb44adc91420f6d2e)
++++ b/databaseCode.txt	(date 1707598788474)
+@@ -1,4 +1,1 @@
+-hUKO-yAz9-In2F 03/01/24:07:38:44
+-Dl8g-kNYv-UzPq 03/01/24:07:43:13
+-fwdV-dIuM-kp5R 03/01/24:08:11:56
+-CyQm-jQzF-EDZo 03/01/24:08:13:40
++rjHp-8tPb-SdVd 11/02/24:05:55:48
+Index: src/main/kotlin/com/example/cheat_project/RecieverController.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.cheat_project\r\n\r\nimport javafx.beans.property.SimpleStringProperty\r\nimport javafx.fxml.FXML\r\nimport javafx.scene.control.Button\r\nimport javafx.scene.control.Label\r\nimport javafx.scene.image.Image\r\nimport javafx.scene.image.ImageView\r\nimport javafx.scene.layout.AnchorPane\r\nimport javafx.scene.layout.GridPane\r\nimport javafx.stage.DirectoryChooser\r\nimport javafx.stage.Stage\r\nimport java.io.File\r\nimport java.io.FileInputStream\r\nimport java.io.FileOutputStream\r\nimport java.net.HttpURLConnection\r\nimport java.net.URL\r\nimport java.security.spec.ECField\r\nimport java.io.BufferedInputStream\r\n\r\nclass RecieverController {\r\n    val interval: Long = 3000\r\n    lateinit var labelCodeDisplay: Label\r\n    lateinit var buttonToFolder: Button\r\n    lateinit var imageDisplay: ImageView\r\n    lateinit var buttonGoToMenuReciever: Button\r\n    lateinit var scrollImages: AnchorPane\r\n    lateinit var gridPane: GridPane\r\n\r\n    lateinit var codeString: String\r\n    val serverUrl = \"http://172.24.32.1:8000\"  // Replace with the actual server URL\r\n    var clientId : String = \"\"\r\n    var imageUrl = \"$serverUrl/$clientId\"\r\n    var savePath = \"src/images/downloaded/image_downloaded.png\"\r\n    var imgName = \"image_downloaded.png\"\r\n    var startTime: Long = 0\r\n    var thread: Thread? = null\r\n\r\n\r\n    @FXML\r\n    fun chooseFolderToSave() { // it's work!\r\n        val dirChoose = DirectoryChooser()\r\n        val stage : Stage = gridPane.scene.window as Stage\r\n        val file : File = dirChoose.showDialog(stage)\r\n        println(\"Path : \" + file.absolutePath)\r\n        savePath = file.absolutePath + \"\\\\\" + imgName\r\n    }\r\n    @FXML\r\n    fun startController(code: String) {\r\n        codeString = code\r\n        clientId = code\r\n        imageUrl = \"$serverUrl/$clientId\"\r\n        labelCodeDisplay.text = code\r\n        startTime = System.currentTimeMillis()\r\n        thread = Thread {\r\n            while (true) {\r\n                getImageContinuously()\r\n                try {\r\n                    Thread.sleep(1000);\r\n                } catch (ex: java.lang.Exception) {\r\n                    println(\"Thread error occurred!\")\r\n                }\r\n            }\r\n        }\r\n        thread!!.start()\r\n    }\r\n\r\n    fun stopGetter() {\r\n        thread!!.interrupt()\r\n        buttonGoToMenuReciever.scene.window.hide()\r\n        System.exit(0)\r\n    }\r\n\r\n    fun getImageContinuously() {\r\n        val currTime = System.currentTimeMillis()\r\n        if (currTime - startTime > interval) {\r\n            try {\r\n                val file = File(savePath)\r\n                val image = Image(file.toURI().toString())\r\n                downloadImage(imageUrl, savePath)\r\n                imageDisplay.image = image\r\n                println(\"Image was set\")\r\n            } catch (ex: Exception) {\r\n                println(\"Can't get image from file\")\r\n            }\r\n            startTime = currTime\r\n        }\r\n    }\r\n\r\n    /*fun downloadImage(imageUrl: String, savePath: String) {\r\n        val url = URL(imageUrl)\r\n        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection\r\n\r\n        try {\r\n            val inputStream = connection.inputStream\r\n\r\n            // Save the image to a file\r\n            val fileOutputStream = FileOutputStream(savePath)\r\n            val buffer = ByteArray(1024)\r\n            var bytesRead: Int\r\n\r\n            while (inputStream.read(buffer).also { bytesRead = it } != -1) {\r\n                fileOutputStream.write(buffer, 0, bytesRead)\r\n            }\r\n\r\n            fileOutputStream.close()\r\n            println(\"Image downloaded successfully to $savePath\")\r\n        } catch (e: Exception) {\r\n            println(\"ERROR during image download!\")\r\n        } finally {\r\n            connection.disconnect()\r\n        }\r\n    }*/\r\n\r\n    private fun downloadImage(imageUrl: String, savePath: String) {\r\n        try {\r\n            // Create URL object\r\n            val url = URL(imageUrl)\r\n\r\n            // Open a connection\r\n            val connection = url.openConnection() as HttpURLConnection\r\n\r\n            // Set the request method to GET\r\n            connection.requestMethod = \"GET\"\r\n\r\n            // Get the input stream\r\n            val inputStream = BufferedInputStream(connection.inputStream)\r\n\r\n            // Create a FileOutputStream to save the image\r\n            val outputFile = FileOutputStream(savePath)\r\n\r\n            // Read the input stream and write to the output file\r\n            inputStream.use { input ->\r\n                outputFile.use { fileOut ->\r\n                    input.copyTo(fileOut)\r\n                }\r\n            }\r\n\r\n            println(\"Image downloaded successfully.\")\r\n        } catch (e: Exception) {\r\n            println(\"Failed to download image. Exception: $e\")\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/kotlin/com/example/cheat_project/RecieverController.kt b/src/main/kotlin/com/example/cheat_project/RecieverController.kt
+--- a/src/main/kotlin/com/example/cheat_project/RecieverController.kt	(revision 9960727d499426109da7e3dcb44adc91420f6d2e)
++++ b/src/main/kotlin/com/example/cheat_project/RecieverController.kt	(date 1707594877005)
+@@ -28,7 +28,7 @@
+     lateinit var gridPane: GridPane
+ 
+     lateinit var codeString: String
+-    val serverUrl = "http://172.24.32.1:8000"  // Replace with the actual server URL
++    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
+     var clientId : String = ""
+     var imageUrl = "$serverUrl/$clientId"
+     var savePath = "src/images/downloaded/image_downloaded.png"
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"eb92854e-8255-42e3-b436-05d5e0f372f6\" name=\"Changes\" comment=\"Fixed input-code.fxml\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"change-author1\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;vladimirch-afk&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">\r\n    <option name=\"selectedUrlAndAccountId\">\r\n      <UrlAndAccount>\r\n        <option name=\"accountId\" value=\"3521270d-f465-4fa6-894b-48550b1589da\" />\r\n        <option name=\"url\" value=\"https://github.com/AMGureev/cheat_project.git\" />\r\n      </UrlAndAccount>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2Ym7Ov0w8S56oF6FFSxt8j1Y5iI\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/SceneBuilder.exe&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"HelloApplicationKt\" type=\"JetRunConfigurationType\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.cheat_project.HelloApplicationKt\" />\r\n      <module name=\"cheat_project\" />\r\n      <shortenClasspath name=\"NONE\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Kotlin.HelloApplicationKt\" />\r\n        <item itemvalue=\"Kotlin.HelloApplicationKt\" />\r\n        <item itemvalue=\"Kotlin.HelloApplicationKt\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"eb92854e-8255-42e3-b436-05d5e0f372f6\" name=\"Changes\" comment=\"\" />\r\n      <created>1701118872933</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1701118872933</updated>\r\n      <workItem from=\"1701722893665\" duration=\"5570000\" />\r\n      <workItem from=\"1701764791939\" duration=\"10110000\" />\r\n      <workItem from=\"1701855276090\" duration=\"1248000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Add fun screenShot on HelloController.kt\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701173412408</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701173412408</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701204628842</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701204628842</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"edit fun generateCode() =&gt; append code and endTime in database file.\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701205847940</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701205847940</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"edit fun generateCode()\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701208584602</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701208584602</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"it's working!\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701245582442</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701245582442</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"it's working!\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701259173588</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701259173588</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"it's working!\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701264632241</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701264632241</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Key verification added\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1701357560288</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1701357560288</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Fixed input-code.fxml\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1707592939769</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1707592939769</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Fixed input-code.fxml\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1707592997234</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1707592997234</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"11\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Add fun screenShot on HelloController.kt\" />\r\n    <MESSAGE value=\"Add new fun() =&gt; checkCode(code: String): Boolean&#10;What function returned true if code in databaseCode and code's endtime is bigger than timeNow, else False.\" />\r\n    <MESSAGE value=\"edit fun generateCode() =&gt; append code and endTime in database file.\" />\r\n    <MESSAGE value=\"edit fun generateCode()\" />\r\n    <MESSAGE value=\"client-server communication possible\" />\r\n    <MESSAGE value=\"it's working!\" />\r\n    <MESSAGE value=\"Key verification added\" />\r\n    <MESSAGE value=\"Fixed input-code.fxml\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Fixed input-code.fxml\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint enabled=\"true\" type=\"java-exception\">\r\n          <properties class=\"java.lang.IllegalStateException\" package=\"java.lang\">\r\n            <option name=\"NOTIFY_UNCAUGHT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"2\" />\r\n        </breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9960727d499426109da7e3dcb44adc91420f6d2e)
++++ b/.idea/workspace.xml	(date 1707594882872)
+@@ -4,7 +4,13 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="Fixed input-code.fxml" />
++    <list default="true" id="eb92854e-8255-42e3-b436-05d5e0f372f6" name="Changes" comment="Fixed input-code.fxml">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/databaseCode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/databaseCode.txt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/images/screenshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/screenshot.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/RecieverController.kt" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project/ScreenShoter.kt" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -48,23 +54,24 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;D:/SceneBuilder.exe&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Kotlin.HelloApplicationKt.executor": "Run",
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "git-widget-placeholder": "main",
++    "ignore.virus.scanning.warn.message": "true",
++    "last_opened_file_path": "D:/SceneBuilder.exe",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "run.code.analysis.last.selected.profile": "pProject Default",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/src/main/kotlin/com/example/cheat_project" />
+@@ -179,7 +186,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1707592997234</updated>
+     </task>
+-    <option name="localTasksCounter" value="11" />
++    <task id="LOCAL-00011" summary="Fixed input-code.fxml">
++      <option name="closed" value="true" />
++      <created>1707593181229</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1707593181229</updated>
++    </task>
++    <option name="localTasksCounter" value="12" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 9960727d499426109da7e3dcb44adc91420f6d2e)
++++ b/.idea/misc.xml	(date 1707664791033)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="MavenProjectsManager">
+@@ -6,6 +7,7 @@
+         <option value="$PROJECT_DIR$/pom.xml" />
+       </list>
+     </option>
++    <option name="workspaceImportForciblyTurnedOn" value="true" />
+   </component>
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />

@@ -15,6 +15,8 @@ import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
 import java.io.File
+import java.net.HttpURLConnection
+import java.net.URL
 import java.time.LocalDateTime
 import javax.imageio.ImageIO
 import java.time.LocalTime
@@ -121,26 +123,49 @@ class HelloController {
 
     @FXML
     private fun generateCode() {
-        if (waitOrWork()){
+        if (waitOrWork()) {
             val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
             val code = (1..4).map { allowedChars.random() }.joinToString("") +
                     "-" +
                     (1..4).map { allowedChars.random() }.joinToString("") +
                     "-" +
                     (1..4).map { allowedChars.random() }.joinToString("")
-            codeGenText.text = code;
+
+            codeGenText.text = code
             codeInsertText.text = code
+
             val current = LocalDateTime.now().plusHours(6)
             val formatted = DateTimeFormatter.ofPattern("dd/MM/yy:HH:mm:ss")
             val timeNow = current.format(formatted)
+
             val filename = "databaseCode.txt"
             val finalString = "$code $timeNow\n"
+
+            // Добавление кода в общую базу данных
             File(filename).appendText(finalString)
+
+            // Уведомление сервера, отправив POST-запрос с кодом
+            sendCodeToServer(code)
+
             thread?.interrupt()
             thread = null
             timer(1)
         }
     }
+
+    private fun sendCodeToServer(code: String) {
+        val url = URL("http://192.168.1.79:8000/$code")
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "POST"
+        connection.doOutput = true
+        connection.outputStream.use { os ->
+            os.write("".toByteArray()) // Отправка пустого тела для простоты
+        }
+        val responseCode = connection.responseCode
+        println("POST-запрос на сервер с кодом: $code, Код ответа: $responseCode")
+        connection.disconnect()
+    }
+
 
     @FXML
     private fun inputCode() {
