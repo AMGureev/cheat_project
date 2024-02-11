@@ -14,6 +14,7 @@ import javafx.stage.Stage
 import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -195,16 +196,53 @@ class HelloController {
     }
     @FXML
     private fun connectToSession() {
-        val key = codeInsertText.text
-        println(key) // print code in console
-        if (checkCode(key)){
-            if (shooter != null) {
-                shooter!!.stopThread()
-                shooter = null
+        val key = codeInsertText.text.trim()
+        println(key) // Вывести код в консоль (для отладки)
+
+        if (key.isNotBlank() && checkCode(key)) {
+            // Отправить запрос на сервер для получения данных изображения
+            val imageBytes = getImageDataFromServer(key)
+
+            if (imageBytes != null) {
+                // Создать новый получатель (RecieverController) и передать ему данные изображения
+                val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("getter-view.fxml"))
+                val scene = Scene(fxmlLoader.load())
+                val stage = Stage()
+                stage.scene = scene
+                stage.setOnShown {
+                    fxmlLoader.getController<RecieverController>().startController(imageBytes.toString())
+                }
+                stage.show()
+            } else {
+                // Обработать ошибку получения данных изображения
+                println("Ошибка при получении данных изображения от сервера.")
             }
-            shooter = ScreenShoter(key)
+        } else {
+            println("Некорректный код или время работы кода истекло.")
         }
     }
+
+    private fun getImageDataFromServer(key: String): ByteArray? {
+        val url = URL("http://192.168.1.79:8000/$key")
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+
+        // Проверить код ответа от сервера
+        val responseCode = connection.responseCode
+        if (responseCode == 200) {
+            // Если код ответа 200, считать данные изображения из ответа
+            val inputStream = connection.inputStream
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            inputStream.copyTo(byteArrayOutputStream)
+            connection.disconnect()
+            return byteArrayOutputStream.toByteArray()
+        } else {
+            // Если код ответа не 200, вернуть null
+            connection.disconnect()
+            return null
+        }
+    }
+
 
     @FXML
     private fun screenShot() {
