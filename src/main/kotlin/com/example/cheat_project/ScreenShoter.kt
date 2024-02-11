@@ -13,28 +13,54 @@ import kotlin.properties.Delegates
 class ScreenShoter (
     clientId: String
 ) {
-    val serverUrl = "http://172.24.32.1:8000"  // Replace with the actual server URL
+    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
     //val clientId : String = "id"
     val imageUrl = "$serverUrl/$clientId"
     var startTime : Long = 0
+
+    companion object {
+        var thread : Thread? = null
+    }
 
     init {
         initializeShooter()
         println("Shooter created")
     }
+
+    fun stopThread() {
+        thread?.interrupt()
+    }
+
     private fun initializeShooter() {
         startTime = System.currentTimeMillis()
-        val thread = Thread{
-            while (true) {
-                startProccess()
-                try {
-                    Thread.sleep(1000)
-                } catch (e: Exception) {
-                    throw RuntimeException()
+        if (thread == null) {
+            thread = Thread{
+                while (true) {
+                    startProccess()
+                    try {
+                        Thread.sleep(1000)
+                    } catch (e: Exception) {
+                        throw RuntimeException()
+                    }
                 }
             }
+            thread!!.start()
+            println("New thread created")
+        } else {
+            thread?.interrupt()
+            thread = Thread{
+                while (true) {
+                    startProccess()
+                    try {
+                        Thread.sleep(1000)
+                    } catch (e: Exception) {
+                        throw RuntimeException()
+                    }
+                }
+            }
+            thread!!.start()
+            println("Thread was recreated")
         }
-        thread.start()
     }
     private fun startProccess() {
         println("In proccess")

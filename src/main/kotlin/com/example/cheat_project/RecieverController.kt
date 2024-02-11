@@ -28,13 +28,15 @@ class RecieverController {
     lateinit var gridPane: GridPane
 
     lateinit var codeString: String
-    val serverUrl = "http://172.24.32.1:8000"  // Replace with the actual server URL
+    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
     var clientId : String = ""
     var imageUrl = "$serverUrl/$clientId"
     var savePath = "src/images/downloaded/image_downloaded.png"
     var imgName = "image_downloaded.png"
     var startTime: Long = 0
-    var thread: Thread? = null
+    companion object {
+        var thread: Thread? = null
+    }
 
 
     @FXML
@@ -52,6 +54,10 @@ class RecieverController {
         imageUrl = "$serverUrl/$clientId"
         labelCodeDisplay.text = code
         startTime = System.currentTimeMillis()
+        if (thread != null) {
+            thread!!.interrupt()
+            thread = null
+        }
         thread = Thread {
             while (true) {
                 getImageContinuously()

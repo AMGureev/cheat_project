@@ -1,5 +1,6 @@
 package com.example.cheat_project
 
+import javafx.application.Application
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
@@ -20,7 +21,9 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class HelloController {
-    var shooter: ScreenShoter? = null
+    companion object {
+        var shooter: ScreenShoter? = null
+    }
     lateinit var toMenu2: Button
     private var firstTime: Long = 0
     lateinit var connectButton: Button
@@ -170,6 +173,10 @@ class HelloController {
         val key = codeInsertText.text
         println(key) // print code in console
         if (checkCode(key)){
+            if (shooter != null) {
+                shooter!!.stopThread()
+                shooter = null
+            }
             shooter = ScreenShoter(key)
         }
     }
