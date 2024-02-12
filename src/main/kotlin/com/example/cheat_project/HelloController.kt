@@ -14,14 +14,17 @@ import javafx.stage.Stage
 import java.awt.Rectangle
 import java.awt.Robot
 import java.awt.Toolkit
-import java.io.ByteArrayOutputStream
+import java.io.BufferedInputStream
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.time.LocalDateTime
 import javax.imageio.ImageIO
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+
 
 class HelloController {
     companion object {
@@ -124,49 +127,15 @@ class HelloController {
 
     @FXML
     private fun generateCode() {
-        if (waitOrWork()) {
-            val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-            val code = (1..4).map { allowedChars.random() }.joinToString("") +
-                    "-" +
-                    (1..4).map { allowedChars.random() }.joinToString("") +
-                    "-" +
-                    (1..4).map { allowedChars.random() }.joinToString("")
-
-            codeGenText.text = code
+        if (waitOrWork()){
+            val code = getCodeFromServer()
+            codeGenText.text = code;
             codeInsertText.text = code
-
-            val current = LocalDateTime.now().plusHours(6)
-            val formatted = DateTimeFormatter.ofPattern("dd/MM/yy:HH:mm:ss")
-            val timeNow = current.format(formatted)
-
-            val filename = "databaseCode.txt"
-            val finalString = "$code $timeNow\n"
-
-            // Добавление кода в общую базу данных
-            File(filename).appendText(finalString)
-
-            // Уведомление сервера, отправив POST-запрос с кодом
-            sendCodeToServer(code)
-
             thread?.interrupt()
             thread = null
             timer(1)
         }
     }
-
-    private fun sendCodeToServer(code: String) {
-        val url = URL("http://95.165.8.132:8000/$code")
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "POST"
-        connection.doOutput = true
-        connection.outputStream.use { os ->
-            os.write("".toByteArray()) // Отправка пустого тела для простоты
-        }
-        val responseCode = connection.responseCode
-        println("POST-запрос на сервер с кодом: $code, Код ответа: $responseCode")
-        connection.disconnect()
-    }
-
 
     @FXML
     private fun inputCode() {
@@ -196,53 +165,16 @@ class HelloController {
     }
     @FXML
     private fun connectToSession() {
-        val key = codeInsertText.text.trim()
-        println(key) // Вывести код в консоль (для отладки)
-
-        if (key.isNotBlank() && checkCode(key)) {
-            // Отправить запрос на сервер для получения данных изображения
-            val imageBytes = getImageDataFromServer(key)
-
-            if (imageBytes != null) {
-                // Создать новый получатель (RecieverController) и передать ему данные изображения
-                val fxmlLoader = FXMLLoader(HelloApplication::class.java.getResource("getter-view.fxml"))
-                val scene = Scene(fxmlLoader.load())
-                val stage = Stage()
-                stage.scene = scene
-                stage.setOnShown {
-                    fxmlLoader.getController<RecieverController>().startController(imageBytes.toString())
-                }
-                stage.show()
-            } else {
-                // Обработать ошибку получения данных изображения
-                println("Ошибка при получении данных изображения от сервера.")
+        val key = codeInsertText.text
+        println(key) // print code in console
+        if (checkCode(key)){
+            if (shooter != null) {
+                shooter!!.stopThread()
+                shooter = null
             }
-        } else {
-            println("Некорректный код или время работы кода истекло.")
+            shooter = ScreenShoter(key)
         }
     }
-
-    private fun getImageDataFromServer(key: String): ByteArray? {
-        val url = URL("http://95.165.8.132:8000/$key")
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "GET"
-
-        // Проверить код ответа от сервера
-        val responseCode = connection.responseCode
-        if (responseCode == 200) {
-            // Если код ответа 200, считать данные изображения из ответа
-            val inputStream = connection.inputStream
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            inputStream.copyTo(byteArrayOutputStream)
-            connection.disconnect()
-            return byteArrayOutputStream.toByteArray()
-        } else {
-            // Если код ответа не 200, вернуть null
-            connection.disconnect()
-            return null
-        }
-    }
-
 
     @FXML
     private fun screenShot() {
@@ -260,38 +192,56 @@ class HelloController {
     }
 
     private fun checkCode(code: String): Boolean{
-        val list = code.split("-")
-        if (list.size != 3){
-            infoErrorLabel.text = "Неправильный формат!"
+
+        val codeToCheck = code
+        val result = checkCodeOnServer(codeToCheck)
+
+        if (result) {
+            println("Код найден на сервере.")
+            return true
+        } else {
+            infoErrorLabel.text = "Код не найден!"
             infoErrorLabel.alignment = Pos.CENTER
             return false
         }
-        val current = LocalDateTime.now()
-        val formatted = DateTimeFormatter.ofPattern("dd/MM/yy:HH:mm:ss")
-        val timeNow = current.format(formatted)
-        val filename = File("databaseCode.txt")
-        val bufferedReader = filename.bufferedReader()
-        val text:List<String> = bufferedReader.readLines()
-        var codeFlag = false
-        for(line in text){
-            val keyAndTime = line.split(" ").toTypedArray()
-            if (keyAndTime.elementAt(0) == code){
-                codeFlag = true
-                val endTime = keyAndTime.elementAt(1)
-                if (LocalDateTime.parse(endTime,formatted) >= current){
-                    return true
-                }
+    }
+
+    fun getCodeFromServer() : String {
+
+        val serverUrl = "http://10.193.92.98:8000"  // Замените на фактический URL сервера
+
+        val url = URL("$serverUrl/get_code")
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+        var message : String = ""
+        try {
+            val reader = BufferedReader(InputStreamReader(connection.inputStream))
+            val response = StringBuilder()
+            var line: String?
+
+            while (reader.readLine().also { line = it } != null) {
+                response.append(line).append('\n')
             }
+
+            reader.close()
+            message = response.toString()
+        } finally {
+            connection.disconnect()
         }
-        return if (codeFlag){
-            infoErrorLabel.text = "Время работы кода истекло!"
-            infoErrorLabel.alignment = Pos.CENTER
-            false
-        }
-        else{
-            infoErrorLabel.text = "Код не найден!"
-            infoErrorLabel.alignment = Pos.CENTER
-            false
+
+        return message
+    }
+    fun checkCodeOnServer(code: String): Boolean {
+        val serverUrl = "http://10.193.92.98:8000"  // Замените на фактический URL сервера
+
+        val url = URL("$serverUrl/verify_code/$code")
+        val connection = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+
+        try {
+            return connection.responseMessage == "OK"
+        } finally {
+            connection.disconnect()
         }
     }
 }

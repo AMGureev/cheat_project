@@ -28,7 +28,7 @@ class RecieverController {
     lateinit var gridPane: GridPane
 
     lateinit var codeString: String
-    val serverUrl = "http://95.165.8.132:8000"  // Replace with the actual server URL
+    val serverUrl = "http://10.193.92.98:8000"  // Replace with the actual server URL
     var clientId : String = ""
     var imageUrl = "$serverUrl/$clientId"
     var savePath = "src/images/downloaded/image_downloaded.png"
